@@ -1,0 +1,351 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>學測英文作文兩段框架</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&family=IBM+Plex+Mono:wght@500&display=swap">
+<style>
+/* Layout: 試卷答案卷——頂部題目資訊列，下方橫向分頁（像答案卷的格），每頁一欄框架＋例句卡 */
+:root{
+  --paper:#f5f7fa; --sheet:#ffffff; --ink:#1d2a3e; --muted:#5b6a80; --rule:#dbe2ec;
+  --accent:#2f5bd3; --accent-soft:#e7eefc; --mark:#fff1a8; --pen:#c23a3a; --ok:#21875a;
+  --f-display:"Source Serif 4", Georgia, "Noto Serif TC", serif;
+  --f-body:"Noto Sans TC", "PingFang TC", "Microsoft JhengHei", system-ui, sans-serif;
+  --f-mono:"IBM Plex Mono", ui-monospace, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --paper:#11161f; --sheet:#182030; --ink:#e6ebf3; --muted:#9aa8bd; --rule:#2a3548;
+  --accent:#86a6ff; --accent-soft:#1f2c4a; --mark:#5a4d12; --pen:#ff8a80; --ok:#5fd19c; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --paper:#11161f; --sheet:#182030; --ink:#e6ebf3; --muted:#9aa8bd; --rule:#2a3548;
+  --accent:#86a6ff; --accent-soft:#1f2c4a; --mark:#5a4d12; --pen:#ff8a80; --ok:#5fd19c; color-scheme:dark}
+
+*{box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font-family:var(--f-body);font-size:16px;line-height:1.7;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:28px 48px}
+.wrap{max-width:880px;margin:0 auto;display:flex;flex-direction:column;gap:20px}
+h1,h2,h3{text-wrap:balance;margin:0;line-height:1.3}
+h1{font-size:clamp(1.6rem,4vw,2.2rem);font-weight:700}
+h2{font-size:1.35rem}
+h3{font-size:1.05rem}
+p{margin:0}
+.eyebrow{font-family:var(--f-mono);font-size:.78rem;letter-spacing:.08em;color:var(--muted);text-transform:uppercase}
+header{display:flex;flex-direction:column;gap:10px}
+header .lede{color:var(--muted);max-width:62ch}
+.facts{display:flex;flex-wrap:wrap;gap:8px;margin-top:4px}
+.fact{font-family:var(--f-mono);font-size:.82rem;border:1px solid var(--rule);background:var(--sheet);border-radius:4px;padding:3px 10px;font-variant-numeric:tabular-nums}
+.fact b{color:var(--accent);font-weight:500}
+
+/* tabs */
+.tabs{display:flex;gap:2px;overflow-x:auto;border-bottom:2px solid var(--ink);scrollbar-width:thin;position:sticky;top:env(safe-area-inset-top,0px);background:var(--paper);z-index:5}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--paper)}
+.tab{flex:0 0 auto;font:inherit;font-size:.95rem;font-weight:500;color:var(--muted);background:transparent;border:1px solid transparent;border-bottom:none;
+  border-radius:6px 6px 0 0;padding:8px 14px;cursor:pointer;display:flex;gap:6px;align-items:baseline}
+.tab .n{font-family:var(--f-mono);font-size:.75rem}
+.tab:hover{color:var(--ink);background:var(--accent-soft)}
+.tab[aria-selected="true"]{color:var(--sheet);background:var(--ink)}
+.tab:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+
+.panel{background:var(--sheet);border:1px solid var(--rule);border-radius:8px;padding:clamp(18px,4vw,32px);display:flex;flex-direction:column;gap:22px}
+.panel > .intro{color:var(--muted);max-width:65ch}
+
+/* framework steps */
+.steps{display:grid;gap:14px}
+.step{display:grid;grid-template-columns:auto 1fr;gap:4px 14px;align-items:start}
+.step .tag{grid-row:span 2;font-family:var(--f-mono);font-size:.78rem;color:var(--accent);border:1.5px solid var(--accent);border-radius:999px;padding:1px 9px;white-space:nowrap;margin-top:3px}
+.step h3{display:flex;flex-wrap:wrap;gap:8px;align-items:baseline}
+.step h3 small{font-weight:400;color:var(--muted);font-size:.85rem}
+.step > div{min-width:0}
+.step p{color:var(--muted);font-size:.95rem}
+
+.patterns{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}
+.pat{font-family:var(--f-display);font-size:1rem;background:var(--mark);padding:1px 8px;border-radius:2px}
+.pat i{font-family:var(--f-body);font-style:normal;font-size:.8rem;color:var(--muted);margin-left:6px}
+
+/* example sentences */
+.ex{border-top:1px dashed var(--rule);padding-top:18px;display:flex;flex-direction:column;gap:10px}
+.ex-head{display:flex;justify-content:space-between;align-items:baseline;gap:10px;flex-wrap:wrap}
+.toggle{font:inherit;font-size:.85rem;color:var(--accent);background:transparent;border:1px solid var(--accent);border-radius:999px;padding:2px 12px;cursor:pointer}
+.toggle:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+ol.sent{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:10px}
+ol.sent li{display:grid;grid-template-columns:5.2em 1fr;gap:12px;align-items:baseline}
+ol.sent .role{font-size:.78rem;color:var(--muted);text-align:right;letter-spacing:.04em}
+ol.sent .en{font-family:var(--f-display);font-size:1.08rem;line-height:1.55}
+ol.sent .zh{display:block;font-size:.88rem;color:var(--muted);margin-top:2px}
+.hide-zh .zh{display:none}
+.en mark{background:var(--mark);color:inherit;padding:0 2px}
+
+/* table */
+.tbl{overflow-x:auto}
+table{border-collapse:collapse;width:100%;min-width:460px;font-size:.95rem}
+th,td{border-bottom:1px solid var(--rule);padding:9px 10px;text-align:left;vertical-align:top}
+th{font-size:.8rem;color:var(--muted);font-weight:500;letter-spacing:.05em}
+td.en-c{font-family:var(--f-display);font-size:1.02rem}
+
+.note{border-left:3px solid var(--pen);padding:4px 0 4px 14px;font-size:.95rem}
+.note b{color:var(--pen)}
+
+/* upgrades */
+.up{display:grid;gap:12px}
+.up-row{display:grid;grid-template-columns:1fr auto 1fr;gap:10px;align-items:center;border:1px solid var(--rule);border-radius:6px;padding:12px 14px}
+.up-row > div{min-width:0}
+.up-row .lbl{font-size:.72rem;letter-spacing:.06em;color:var(--muted);display:block}
+.up-row .before{font-family:var(--f-display);color:var(--muted);text-decoration:line-through;text-decoration-color:var(--pen);text-decoration-thickness:1.5px}
+.up-row .after{font-family:var(--f-display)}
+.up-row .arrow{color:var(--pen);font-family:var(--f-mono)}
+.up-row .why{grid-column:1/-1;font-size:.85rem;color:var(--ok)}
+
+.signals{display:flex;flex-wrap:wrap;gap:8px}
+.sig{border:1px solid var(--rule);border-radius:4px;padding:4px 10px;font-size:.88rem}
+.sig code{font-family:var(--f-display);font-size:1rem;color:var(--accent)}
+
+.wrong{font-family:var(--f-display);font-size:1.05rem;color:var(--pen);text-decoration:underline wavy var(--pen);text-underline-offset:4px}
+.qa{display:flex;flex-direction:column;gap:14px}
+.qa details{border:1px solid var(--rule);border-radius:6px;padding:10px 14px}
+.qa summary{cursor:pointer;font-weight:500}
+.qa details p{margin-top:8px;color:var(--muted)}
+.check{display:grid;gap:6px;padding:0;margin:0;list-style:none}
+.check li::before{content:"□ ";color:var(--accent);font-family:var(--f-mono)}
+
+footer{font-size:.82rem;color:var(--muted)}
+footer a{color:var(--accent)}
+
+@media (max-width:560px){
+  ol.sent li{grid-template-columns:1fr;gap:2px}
+  ol.sent .role{text-align:left}
+  .up-row{grid-template-columns:1fr}
+  .up-row .arrow{transform:rotate(90deg);justify-self:start}
+}
+@media (prefers-reduced-motion:no-preference){.panel{animation:in .18s ease-out}@keyframes in{from{transform:translateY(4px)}to{transform:none}}}
+.site{display:flex;gap:8px;align-items:center;font-size:.9rem;color:var(--muted)}
+.site a{color:var(--accent);text-decoration:none;font-weight:500}
+.site .go{margin-left:auto}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+<nav class="site" aria-label="網站"><a href="../">學測英文</a><span aria-hidden="true">/</span><span>作文框架</span><a class="go" href="../vocab/">單字複習 →</a></nav>
+<header>
+  <span class="eyebrow">GSAT English · 引導式寫作</span>
+  <h1>學測英文作文：兩段式萬用框架</h1>
+  <p class="lede">把空白的兩段拆成固定格子，想法填進去就能成形。每個分頁是一個段落或重點，附可直接套用的句型與示範句。</p>
+  <div class="facts">
+    <span class="fact">文分 <b>2</b> 段</span>
+    <span class="fact">至少 <b>120</b> 字，建議寫到 <b>~140</b></span>
+    <span class="fact">篇幅：超過 <b>1</b> 面，寫到反面約 <b>½</b> 最佳</span>
+    <span class="fact">滿分 <b>20</b> 分</span>
+    <span class="fact">整體式評分</span>
+  </div>
+</header>
+
+<nav class="tabs" role="tablist" aria-label="作文框架分頁">
+  <button class="tab" role="tab" id="t-overview" aria-controls="overview" data-id="overview"><span class="n">0</span>總覽</button>
+  <button class="tab" role="tab" id="t-para1" aria-controls="para1" data-id="para1"><span class="n">1</span>第一段</button>
+  <button class="tab" role="tab" id="t-para2" aria-controls="para2" data-id="para2"><span class="n">2</span>第二段</button>
+  <button class="tab" role="tab" id="t-linkers" aria-controls="linkers" data-id="linkers"><span class="n">3</span>轉承語</button>
+  <button class="tab" role="tab" id="t-upgrade" aria-controls="upgrade" data-id="upgrade"><span class="n">4</span>句子升級</button>
+  <button class="tab" role="tab" id="t-grammar" aria-controls="grammar" data-id="grammar"><span class="n">5</span>文法與 Q&amp;A</button>
+</nav>
+
+<!-- 0 overview -->
+<section class="panel" role="tabpanel" id="overview" aria-labelledby="t-overview">
+  <h2>先搞懂：兩段各負責什麼</h2>
+  <p class="intro">近年學測引導式寫作多是兩段式。第一段處理「題目給了什麼」，第二段往下延伸。實際每段寫什麼，一律以當年作答提示為準。</p>
+  <div class="steps">
+    <div class="step"><span class="tag">第一段</span><div><h3>描述／說明 <small>主題句 ＋ 展開 2–3 句</small></h3>
+      <p>看圖題：描述圖中發生的事。引導題：說明題目給的情境或現象。重點是把事情交代清楚，意見先不放。</p></div></div>
+    <div class="step"><span class="tag">第二段</span><div><h3>延伸與發揮 <small>表態 ＋ 理由或例子 ＋ 收尾</small></h3>
+      <p>依題目要求寫個人看法、經驗，或原因與影響（例如 115 學測要求說明原因與可能影響）。邏輯一樣：先亮觀點，再撐住它，最後收束。</p></div></div>
+  </div>
+  <div class="tbl"><table>
+    <thead><tr><th>段落</th><th>句子</th><th>任務</th><th>句數</th></tr></thead>
+    <tbody>
+      <tr><td rowspan="2">第一段</td><td>主題句</td><td>一句話總括本段</td><td>1</td></tr>
+      <tr><td>展開句</td><td>誰、在做什麼、發生什麼</td><td>2–3</td></tr>
+      <tr><td rowspan="3">第二段</td><td>表態句</td><td>亮出觀點</td><td>1</td></tr>
+      <tr><td>理由或例子</td><td>原因＋具體例子或經驗（主體）</td><td>2–3</td></tr>
+      <tr><td>收尾句</td><td>小結、呼應或展望</td><td>1</td></tr>
+    </tbody>
+  </table></div>
+  <p class="note"><b>篇幅目標：</b>答案卷要寫超過一面，寫到反面的一半左右最佳。第一段約佔一半，第二段的理由與例子多寫一點，篇幅自然就夠。</p>
+  <p class="note"><b>評分四面向：</b>內容、組織、文法句構、字彙拼字。大考中心採整體式評分，未公布各項配分。</p>
+</section>
+
+<!-- 1 para1 -->
+<section class="panel" role="tabpanel" id="para1" aria-labelledby="t-para1" hidden>
+  <h2>第一段：主題句 → 展開 2–3 句</h2>
+  <p class="intro">看圖描述題，第一段先把「看到什麼」交代乾淨，意見留到第二段。</p>
+  <div class="steps">
+    <div class="step"><span class="tag">① 1 句</span><div><h3>主題句</h3><p>用一句話總括整段要講的畫面或現象。</p>
+      <div class="patterns"><span class="pat">The picture shows…<i>這張圖呈現了</i></span><span class="pat">In the picture, we can see…<i>圖中可以看到</i></span><span class="pat">Nowadays, more and more people…<i>現在越來越多人</i></span></div></div></div>
+    <div class="step"><span class="tag">② 2–3 句</span><div><h3>展開句</h3><p>補上是誰、在做什麼、發生了什麼；由全景到局部，最後可補一句氣氛。</p>
+      <div class="patterns"><span class="pat">First, …<i>首先</i></span><span class="pat">In addition, … / Moreover, …<i>此外</i></span><span class="pat">At the same time, …<i>與此同時</i></span></div></div></div>
+  </div>
+  <div class="ex" data-ex>
+    <div class="ex-head"><h3>示範句：放學後的籃球場（看圖題）</h3><button class="toggle" type="button" id="z1">隱藏中文</button></div>
+    <ol class="sent">
+      <li><span class="role">主題句</span><span class="en"><mark>The picture shows</mark> a group of teenagers playing basketball on a school court after class.<span class="zh">這張圖呈現了一群青少年放學後在學校球場打籃球。</span></span></li>
+      <li><span class="role">展開 1</span><span class="en"><mark>First,</mark> two boys are jumping for the ball, while their teammates are shouting and waving their hands.<span class="zh">首先，兩個男孩正跳起搶球，隊友則在一旁喊叫、揮手。</span></span></li>
+      <li><span class="role">展開 2</span><span class="en"><mark>In addition,</mark> a girl is sitting on the bench, keeping score in a small notebook.<span class="zh">此外，有個女孩坐在長椅上，用小筆記本記分。</span></span></li>
+      <li><span class="role">展開 3</span><span class="en">Although the sun is setting, everyone looks excited and full of energy.<span class="zh">雖然太陽快下山了，每個人看起來都興奮又充滿活力。</span></span></li>
+    </ol>
+  </div>
+</section>
+
+<!-- 2 para2 -->
+<section class="panel" role="tabpanel" id="para2" aria-labelledby="t-para2" hidden>
+  <h2>第二段：表態 → 理由或例子 → 收尾</h2>
+  <p class="intro">以「個人看法題」為例；「原因與影響題」也是同樣的推進邏輯。理由建議 1 個主要理由＋1 個例子或經驗，寫深寫具體，勝過列一堆理由。</p>
+  <div class="steps">
+    <div class="step"><span class="tag">① 1 句</span><div><h3>表態句</h3><p>直接亮出你的觀點。</p>
+      <div class="patterns"><span class="pat">In my opinion, …<i>在我看來</i></span><span class="pat">I think / I believe that…<i>我認為</i></span><span class="pat">As far as I am concerned, …<i>就我而言</i></span></div></div></div>
+    <div class="step"><span class="tag">② 2–3 句</span><div><h3>理由或例子（主體）</h3><p>給理由，再用具體例子或自身經驗撐住；可用 However 補上另一面向或限制。</p>
+      <div class="patterns"><span class="pat">This is because…<i>這是因為</i></span><span class="pat">For example, … / For instance, …<i>舉例來說</i></span><span class="pat">However, …<i>然而</i></span></div></div></div>
+    <div class="step"><span class="tag">③ 1 句</span><div><h3>收尾句</h3><p>小結、呼應第一句，或展望。</p>
+      <div class="patterns"><span class="pat">Therefore, …<i>因此</i></span><span class="pat">As a result, …<i>結果是</i></span><span class="pat">That is why I believe…<i>這就是我認為…的原因</i></span></div></div></div>
+  </div>
+  <div class="ex" data-ex>
+    <div class="ex-head"><h3>示範句：放學後運動好不好？</h3><button class="toggle" type="button" id="z2">隱藏中文</button></div>
+    <ol class="sent">
+      <li><span class="role">表態</span><span class="en"><mark>In my opinion,</mark> playing sports after school is good for students.<span class="zh">在我看來，放學後運動對學生有好處。</span></span></li>
+      <li><span class="role">理由</span><span class="en"><mark>This is because</mark> exercise helps us relax after a long day of tests and lectures.<span class="zh">這是因為運動能讓我們在一整天的考試和上課後放鬆。</span></span></li>
+      <li><span class="role">例子</span><span class="en"><mark>For example,</mark> when I feel stressed before an exam, a short game with my friends clears my mind.<span class="zh">舉例來說，考前壓力大時，和朋友打一場短短的球就能讓腦袋清醒。</span></span></li>
+      <li><span class="role">限制</span><span class="en"><mark>However,</mark> we should not play so long that we have no time to review.<span class="zh">然而，我們不該玩到沒時間複習。</span></span></li>
+      <li><span class="role">收尾</span><span class="en"><mark>Therefore,</mark> I believe sports and study can go together, as long as we manage our time well.<span class="zh">因此，我認為只要善於安排時間，運動和讀書可以兼顧。</span></span></li>
+    </ol>
+  </div>
+</section>
+
+<!-- 3 linkers -->
+<section class="panel" role="tabpanel" id="linkers" aria-labelledby="t-linkers" hidden>
+  <h2>常用轉承語</h2>
+  <p class="intro">轉承語負責標示邏輯走向。要轉折才用 However，要總結才用 Therefore。</p>
+  <div class="tbl"><table>
+    <thead><tr><th>功能</th><th>英文</th><th>中文</th></tr></thead>
+    <tbody>
+      <tr><td>起頭／列第一點</td><td class="en-c">First / To begin with</td><td>首先</td></tr>
+      <tr><td>補充</td><td class="en-c">Moreover / In addition / Besides</td><td>此外</td></tr>
+      <tr><td>轉折</td><td class="en-c">However / On the other hand</td><td>然而／另一方面</td></tr>
+      <tr><td>舉例</td><td class="en-c">For example / For instance</td><td>舉例來說</td></tr>
+      <tr><td>表態</td><td class="en-c">In my opinion / I believe</td><td>在我看來／我認為</td></tr>
+      <tr><td>因果</td><td class="en-c">Therefore / As a result</td><td>因此／結果是</td></tr>
+    </tbody>
+  </table></div>
+  <p class="note"><b>兩個常見誤解：</b>① 這些多是轉承副詞，不是連接詞，不能拿來黏合兩個完整句子（要用句號或分號隔開）。② 轉承語不會自動加分，整篇堆滿 Moreover、In addition，不如少用、用準。</p>
+  <div class="ex" data-ex>
+    <div class="ex-head"><h3>正確 vs. 錯誤用法</h3><button class="toggle" type="button" id="z3">隱藏中文</button></div>
+    <ol class="sent">
+      <li><span class="role" style="color:var(--pen)">✗ 錯誤</span><span class="en">I was tired, however I kept studying.<span class="zh">however 不是連接詞，逗號接不起兩個句子。</span></span></li>
+      <li><span class="role" style="color:var(--ok)">✓ 正確</span><span class="en">I was tired<mark>; however,</mark> I kept studying.<span class="zh">用分號（或句號）分開，再接 however。</span></span></li>
+      <li><span class="role" style="color:var(--ok)">✓ 正確</span><span class="en">I was tired, <mark>but</mark> I kept studying.<span class="zh">要用逗號連接，就換成真正的連接詞 but。</span></span></li>
+    </ol>
+  </div>
+</section>
+
+<!-- 4 upgrade -->
+<section class="panel" role="tabpanel" id="upgrade" aria-labelledby="t-upgrade" hidden>
+  <h2>句子升級：具體化＋句型變化</h2>
+  <p class="intro">原文範例約 118 字，句子正確但偏保守；升級到約 165 字後，作者教學估計從約 17/20 提升到約 19/20。關鍵不是堆難字，而是把句子寫得更具體、句型更有變化。</p>
+  <div class="tbl"><table>
+    <thead><tr><th>面向（教學估計）</th><th>原版</th><th>升級版</th><th>差在哪</th></tr></thead>
+    <tbody>
+      <tr><td>內容</td><td>4/5</td><td>5/5</td><td>加入人物位置、動作、氣氛；第二段寫出優點、例子與限制</td></tr>
+      <tr><td>組織</td><td>5/5</td><td>5/5</td><td>全景 → 局部 → 氣氛；表態 → 解釋 → 例子 → 限制 → 結論</td></tr>
+      <tr><td>文法句構</td><td>4/5</td><td>5/5</td><td>加入分詞片語、讓步句、條件句、分號</td></tr>
+      <tr><td>字彙拼字</td><td>4/5</td><td>4/5</td><td>用詞更精確，而非更難</td></tr>
+    </tbody>
+  </table></div>
+  <h3>升級示範（以籃球場題目為例）</h3>
+  <div class="up">
+    <div class="up-row"><div><span class="lbl">原版</span><span class="before">Some students are playing basketball.</span></div><span class="arrow">→</span><div><span class="lbl">升級</span><span class="after">Two boys leap for a rebound, while their teammates spread out to defend.</span></div><span class="why">具體動作＋while 同時呈現兩組人</span></div>
+    <div class="up-row"><div><span class="lbl">原版</span><span class="before">They are very happy.</span></div><span class="arrow">→</span><div><span class="lbl">升級</span><span class="after">Although they are sweating, their laughter fills the whole court.</span></div><span class="why">Although 讓步句，用畫面取代形容詞</span></div>
+    <div class="up-row"><div><span class="lbl">原版</span><span class="before">Sports are good for us.</span></div><span class="arrow">→</span><div><span class="lbl">升級</span><span class="after">Sports give us a chance to recharge both our bodies and our minds.</span></div><span class="why">把「好」說清楚好在哪裡</span></div>
+    <div class="up-row"><div><span class="lbl">原版</span><span class="before">But we can't play too much.</span></div><span class="arrow">→</span><div><span class="lbl">升級</span><span class="after">That said, exercise helps only when it does not replace review time.</span></div><span class="why">That said 補充限制，比 But 正式</span></div>
+    <div class="up-row"><div><span class="lbl">原版</span><span class="before">Or we will get bad grades.</span></div><span class="arrow">→</span><div><span class="lbl">升級</span><span class="after">Otherwise, our grades may slowly slip.</span></div><span class="why">otherwise 交代不符條件的後果</span></div>
+  </div>
+  <h3>升級版常見的結構訊號</h3>
+  <div class="signals">
+    <span class="sig"><code>while</code> 同時呈現兩組動作</span>
+    <span class="sig"><code>Although…</code> 讓步</span>
+    <span class="sig"><code>For instance,</code> 舉例</span>
+    <span class="sig"><code>That said,</code> 補充限制</span>
+    <span class="sig"><code>otherwise,</code> 不符條件的後果</span>
+    <span class="sig"><code>as long as…</code> 成立條件</span>
+    <span class="sig"><code>Therefore,</code> 收束</span>
+  </div>
+</section>
+
+<!-- 5 grammar -->
+<section class="panel" role="tabpanel" id="grammar" aria-labelledby="t-grammar" hidden>
+  <h2>文法是地基：框架＋寫對，缺一不可</h2>
+  <p class="intro">框架解決「要寫什麼」，分數還取決於句子有沒有寫對。下面這句框架再好也救不回來：</p>
+  <p class="wrong">He go to library I very like study with friends</p>
+  <div class="ex" data-ex>
+    <div class="ex-head"><h3>三大常見失分，逐一修正</h3><button class="toggle" type="button" id="z5">隱藏中文</button></div>
+    <ol class="sent">
+      <li><span class="role">主謂一致</span><span class="en">He <mark>goes</mark> to <mark>the</mark> library.<span class="zh">第三人稱單數現在式動詞要加 s；library 前要有冠詞。</span></span></li>
+      <li><span class="role">句子結構</span><span class="en">He goes to the library<mark>.</mark> I really like studying with friends.<span class="zh">兩個完整句子不能直接黏在一起；very 不修飾動詞 like。</span></span></li>
+      <li><span class="role">時態</span><span class="en">Yesterday, he <mark>went</mark> to the library after school.<span class="zh">有過去時間點就用過去式。</span></span></li>
+    </ol>
+  </div>
+  <h3>交卷前自我檢查</h3>
+  <ul class="check">
+    <li>兩段分開，各段任務符合當年作答提示</li>
+    <li>字數至少 120，最好寫到 140 左右</li>
+    <li>篇幅寫超過一面，最好寫到反面的一半左右</li>
+    <li>每個動詞的時態、第三人稱 s 都對</li>
+    <li>沒有用逗號硬接兩個完整句子</li>
+    <li>轉承語用在真正需要轉折、舉例、總結的地方</li>
+  </ul>
+  <h3>常見問題</h3>
+  <div class="qa">
+    <details><summary>第一段一定要先描述嗎？</summary><p>看圖描述題照「第一段描述、第二段延伸」最穩，但仍以當年題目指示為準。</p></details>
+    <details><summary>第二段理由寫 2 個還是 3 個？</summary><p>建議 1 個主要理由＋1 個例子或經驗，寫深寫具體。</p></details>
+    <details><summary>轉承語是不是用越多越高級？</summary><p>不是。用得準比用得多重要。</p></details>
+    <details><summary>想到中文卻翻不出正確英文怎麼辦？</summary><p>表示要回頭補文法與句構，多讀、多拆解正確的英文句子。</p></details>
+  </div>
+</section>
+
+<footer>內容整理自雪薇英文〈<a href="https://snoweienglish.com/gsat-english-essay-framework/" target="_blank" rel="noopener">學測英文作文萬用段落框架</a>〉（2026-10-27）；示範句為本頁另寫的練習例句，原文完整範文請見原網頁。分數表為原作者教學估計，非官方配分。</footer>
+</div>
+
+<script>
+(function(){
+  var tabs=[].slice.call(document.querySelectorAll('.tab'));
+  var ids=tabs.map(function(t){return t.dataset.id});
+  function show(id,focus){
+    if(ids.indexOf(id)<0) id='overview';
+    tabs.forEach(function(t){
+      var on=t.dataset.id===id;
+      t.setAttribute('aria-selected',on);t.tabIndex=on?0:-1;
+      document.getElementById(t.dataset.id).hidden=!on;
+      if(on&&focus) t.focus();
+      if(on) t.scrollIntoView({block:'nearest',inline:'nearest'});
+    });
+  }
+  tabs.forEach(function(t,i){
+    t.addEventListener('click',function(){ if(location.hash!=='#'+t.dataset.id) location.hash=t.dataset.id; else show(t.dataset.id); });
+    t.addEventListener('keydown',function(e){
+      var d=e.key==='ArrowRight'?1:e.key==='ArrowLeft'?-1:0; if(!d) return;
+      e.preventDefault(); var n=tabs[(i+d+tabs.length)%tabs.length]; location.hash=n.dataset.id; show(n.dataset.id,true);
+    });
+  });
+  window.addEventListener('hashchange',function(){show(location.hash.slice(1))});
+  show(location.hash.slice(1));
+
+  var hideZh=false; try{hideZh=localStorage.getItem('hideZh')==='1'}catch(e){}
+  var btns=[].slice.call(document.querySelectorAll('.toggle'));
+  function apply(){
+    document.querySelectorAll('[data-ex]').forEach(function(b){b.classList.toggle('hide-zh',hideZh)});
+    btns.forEach(function(b){b.textContent=hideZh?'顯示中文':'隱藏中文';b.setAttribute('aria-pressed',hideZh)});
+  }
+  btns.forEach(function(b){b.addEventListener('click',function(){hideZh=!hideZh;try{localStorage.setItem('hideZh',hideZh?'1':'0')}catch(e){}apply()})});
+  apply();
+})();
+</script>
+</body>
+</html>

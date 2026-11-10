@@ -1,0 +1,196 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>學測單字卡 L4–6</title>
+<meta name="description" content="大考中心詞彙表 Level 4–6 間隔複習：例句、發音、篩選與每日排程。">
+<meta name="theme-color" content="#1f3a5f">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,600;1,6..72,400&family=Noto+Sans+TC:wght@400;500;700&family=IBM+Plex+Mono:wght@500&display=swap">
+<link rel="stylesheet" href="style.css?v=2">
+</head>
+<body>
+<header class="bar">
+  <div class="bar-in">
+    <a class="brand" href="../" title="回學測英文首頁">學測英文</a>
+    <nav class="nav" aria-label="主選單">
+      <a href="#home" data-nav="home">今日</a>
+      <a href="#list" data-nav="list">單字表</a>
+      <a href="#settings" data-nav="settings">設定</a>
+      <a href="../essay/">作文</a>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <!-- HOME -->
+  <section id="v-home" class="view" hidden>
+    <div class="hello">
+      <p class="eyebrow" id="today-label"></p>
+      <h1>今天的複習</h1>
+    </div>
+
+    <div class="levels" role="group" aria-label="選擇級別">
+      <button class="lv" data-lv="4" aria-pressed="true">Level 4</button>
+      <button class="lv" data-lv="5" aria-pressed="true">Level 5</button>
+      <button class="lv" data-lv="6" aria-pressed="true">Level 6</button>
+    </div>
+
+    <div class="stats">
+      <div class="stat due"><b id="s-due">0</b><span>今天要複習</span></div>
+      <div class="stat new"><b id="s-new">0</b><span>今天的新字</span></div>
+      <div class="stat"><b id="s-learn">0</b><span>學習中</span></div>
+      <div class="stat"><b id="s-done">0</b><span>已熟記（間隔 ≥ 21 天）</span></div>
+    </div>
+
+    <div class="progress" aria-hidden="true"><i id="p-bar"></i></div>
+    <p class="muted small" id="p-text"></p>
+
+    <div class="actions">
+      <a class="btn primary" href="#review" id="go-review">開始複習</a>
+      <a class="btn" href="#triage" id="go-triage">快速篩選還沒看過的字</a>
+    </div>
+
+    <details class="how">
+      <summary>怎麼用比較有效？</summary>
+      <ol>
+        <li><b>先快速篩選</b>：每個字只看 2 秒，選「認得／不確定／不認得」。認得的字排到三週後再確認，其他的進入複習。</li>
+        <li><b>每天按「開始複習」</b>：系統只給你今天到期的字，加上固定數量的新字（可在設定調整）。</li>
+        <li><b>誠實按鍵</b>：想不起來就按「忘了」，它會在這一輪稍後再出現，明天也會再考。</li>
+        <li>進度存在這支手機的瀏覽器裡，換手機前記得到「設定」匯出備份。</li>
+      </ol>
+    </details>
+  </section>
+
+  <!-- REVIEW / TRIAGE (shared card) -->
+  <section id="v-card" class="view" hidden>
+    <div class="cardbar">
+      <a href="#home" class="link">← 結束</a>
+      <span class="mode" id="c-mode"></span>
+      <span class="count" id="c-count"></span>
+    </div>
+
+    <article class="card" id="card" aria-live="polite">
+      <div class="card-top">
+        <span class="tag" id="c-lv"></span>
+        <span class="tag ghost" id="c-state"></span>
+      </div>
+      <div class="word-row">
+        <h2 class="word" id="c-word"></h2>
+        <button class="say" id="say-word" aria-label="唸出單字" title="唸出單字">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9H4z"/><path d="M16 8.5a4.5 4.5 0 0 1 0 7M18.5 6a8 8 0 0 1 0 12" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+        </button>
+      </div>
+      <p class="ipa" id="c-ipa"></p>
+
+      <div class="back" id="c-back" hidden>
+        <p class="def" id="c-def"></p>
+        <div class="ex">
+          <div class="ex-row">
+            <p class="ex-en" id="c-ex"></p>
+            <button class="say small" id="say-ex" aria-label="唸出例句" title="唸出例句">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9H4z"/><path d="M16 8.5a4.5 4.5 0 0 1 0 7" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+            </button>
+          </div>
+          <p class="ex-zh" id="c-exz"></p>
+        </div>
+      </div>
+    </article>
+
+    <div class="controls">
+      <button class="btn primary wide" id="reveal">顯示答案 <kbd>空白鍵</kbd></button>
+
+      <div class="grades" id="grades" hidden>
+        <button class="g again" data-g="0"><b>忘了</b><small id="n0"></small></button>
+        <button class="g hard" data-g="1"><b>模糊</b><small id="n1"></small></button>
+        <button class="g good" data-g="2"><b>記得</b><small id="n2"></small></button>
+        <button class="g easy" data-g="3"><b>很熟</b><small id="n3"></small></button>
+      </div>
+
+      <div class="grades three" id="triage-btns" hidden>
+        <button class="g again" data-t="0"><b>不認得</b><small>今天學</small></button>
+        <button class="g hard" data-t="1"><b>不確定</b><small>今天學</small></button>
+        <button class="g easy" data-t="2"><b>認得</b><small>3 週後確認</small></button>
+      </div>
+      <p class="muted small center" id="hint"></p>
+    </div>
+  </section>
+
+  <!-- DONE -->
+  <section id="v-done" class="view" hidden>
+    <div class="done">
+      <h1 id="d-title">今天的份量完成了</h1>
+      <p class="muted" id="d-text"></p>
+      <div class="actions">
+        <a class="btn primary" href="#home">回到今日</a>
+        <button class="btn" id="more-new">再學 10 個新字</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- LIST -->
+  <section id="v-list" class="view" hidden>
+    <h1>單字表</h1>
+    <div class="filters">
+      <input type="search" id="q" placeholder="搜尋英文或中文" autocomplete="off">
+      <select id="f-lv" aria-label="級別">
+        <option value="">全部級別</option><option value="4">Level 4</option><option value="5">Level 5</option><option value="6">Level 6</option>
+      </select>
+      <select id="f-st" aria-label="狀態">
+        <option value="">全部狀態</option><option value="new">還沒學</option><option value="learn">學習中</option><option value="due">今天到期</option><option value="done">已熟記</option>
+      </select>
+    </div>
+    <p class="muted small" id="l-count"></p>
+    <ul class="list" id="list"></ul>
+    <button class="btn wide" id="l-more" hidden>顯示更多</button>
+  </section>
+
+  <!-- SETTINGS -->
+  <section id="v-settings" class="view" hidden>
+    <h1>設定</h1>
+    <div class="form">
+      <label for="set-new">每天新字數量</label>
+      <div class="row"><input type="range" id="set-new" min="5" max="60" step="5"><output id="set-new-o"></output></div>
+
+      <label for="set-voice">發音</label>
+      <select id="set-voice"></select>
+
+      <label for="set-rate">語速</label>
+      <div class="row"><input type="range" id="set-rate" min="0.6" max="1.2" step="0.1"><output id="set-rate-o"></output></div>
+
+      <label class="check"><input type="checkbox" id="set-auto"> 顯示單字時自動唸一次</label>
+      <label class="check"><input type="checkbox" id="set-exauto"> 翻開答案時自動唸例句</label>
+      <button class="btn" id="test-voice">試聽發音</button>
+    </div>
+
+    <h2>備份進度</h2>
+    <p class="muted small">進度只存在這個瀏覽器。換手機或清除瀏覽資料前，先匯出備份檔，到新裝置再匯入。</p>
+    <div class="actions">
+      <button class="btn" id="export">匯出備份檔</button>
+      <label class="btn" for="import">匯入備份檔</label>
+      <input type="file" id="import" accept="application/json,.json" hidden>
+    </div>
+    <p class="small" id="io-msg" role="status"></p>
+
+    <h2>重設</h2>
+    <div class="actions">
+      <button class="btn danger" id="reset">清除所有進度</button>
+    </div>
+    <div class="confirm" id="reset-confirm" hidden>
+      <p>確定要清除全部 <b id="reset-n"></b> 個字的進度嗎？這個動作無法復原。</p>
+      <div class="actions"><button class="btn danger" id="reset-yes">確定清除</button><button class="btn" id="reset-no">取消</button></div>
+    </div>
+
+    <p class="muted small foot">單字資料：大考中心詞彙表 Level 4–6，共 <span id="total-n"></span> 字；例句為另外撰寫的練習句。發音使用裝置內建的語音合成。</p>
+  </section>
+
+  <p class="loading" id="loading">載入單字中…</p>
+</main>
+
+<div class="toast" id="toast" role="status" hidden></div>
+<script src="app.js?v=2"></script>
+</body>
+</html>

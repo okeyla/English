@@ -64,25 +64,38 @@
 
   // ---------- 發音 ----------
   var synth = window.speechSynthesis || null, voices = [];
+  // iPhone 的趣味語音（Albert、Bells…）不適合學發音，從清單拿掉
+  var NOVELTY = /^(Albert|Bad News|Bahh|Bells|Boing|Bubbles|Cellos|Good News|Jester|Organ|Superstar|Trinoids|Whisper|Wobble|Zarvox|Deranged|Hysterical|Pipe Organ)\b/i;
+  if (S.set.voiceV !== 2) { S.set.voice = ''; S.set.voiceV = 2; }   // 舊版預設可能選到怪語音，重設成「自動」
   function loadVoices() {
     if (!synth) return;
-    voices = synth.getVoices().filter(function (v) { return /^en[-_]/i.test(v.lang); });
+    voices = synth.getVoices().filter(function (v) { return /^en[-_]/i.test(v.lang) && !NOVELTY.test(v.name); });
     var sel = $('set-voice'); if (!sel) return;
-    sel.innerHTML = '';
-    if (!voices.length) { sel.innerHTML = '<option value="">裝置預設英文語音</option>'; return; }
+    sel.innerHTML = '<option value="">自動（裝置預設英文語音）</option>';
     voices.forEach(function (v) {
       var o = document.createElement('option'); o.value = v.name; o.textContent = v.name + '（' + v.lang + '）'; sel.appendChild(o);
     });
-    if (!S.set.voice) { var us = voices.find(function (v) { return /en[-_]US/i.test(v.lang); }); S.set.voice = (us || voices[0]).name; }
-    sel.value = S.set.voice;
+    sel.value = voices.some(function (v) { return v.name === S.set.voice; }) ? S.set.voice : '';
   }
+  // iPhone Safari：第一次發聲必須發生在點擊裡，先在第一次點擊時用靜音句子「解鎖」
+  var unlocked = false;
+  function unlock() {
+    if (unlocked || !synth) return; unlocked = true;
+    var u = new SpeechSynthesisUtterance(' '); u.volume = 0; u.lang = 'en-US';
+    try { synth.speak(u); } catch (e) {}
+  }
+  ['touchend', 'click', 'keydown'].forEach(function (ev) { document.addEventListener(ev, unlock, true); });
   function speak(text) {
     if (!synth) { toast('這個瀏覽器不支援語音朗讀'); return; }
-    synth.cancel();
+    unlock();
     var u = new SpeechSynthesisUtterance(text.replace(/\s*\/\s*/g, ', ').replace(/\(s\)/g, ''));
     u.lang = 'en-US'; u.rate = S.set.rate;
-    var v = voices.find(function (x) { return x.name === S.set.voice; }); if (v) { u.voice = v; u.lang = v.lang; }
-    synth.speak(u);
+    var v = S.set.voice && voices.find(function (x) { return x.name === S.set.voice; }); if (v) { u.voice = v; u.lang = v.lang; }
+    var busy = synth.speaking || synth.pending;
+    if (busy) synth.cancel();
+    if (synth.paused) synth.resume();
+    // Safari 在 cancel() 之後立刻 speak() 常會吞掉這一句，稍等一下再唸
+    if (busy) setTimeout(function () { synth.speak(u); }, 120); else synth.speak(u);
   }
   if (synth) { loadVoices(); synth.onvoiceschanged = loadVoices; }
 

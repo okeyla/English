@@ -85,8 +85,17 @@
     try { synth.speak(u); } catch (e) {}
   }
   ['touchend', 'click', 'keydown'].forEach(function (ev) { document.addEventListener(ev, unlock, true); });
+  // 換到下一張卡時：先停掉上一個字，等半秒再唸（期間又換卡或手動按喇叭就取消）
+  var autoT = null;
+  function speakLater(text) {
+    clearTimeout(autoT);
+    if (synth && (synth.speaking || synth.pending)) synth.cancel();
+    var card = cur;
+    autoT = setTimeout(function () { if (cur === card) speak(text); }, 500);
+  }
   function speak(text) {
     if (!synth) { toast('這個瀏覽器不支援語音朗讀'); return; }
+    clearTimeout(autoT);
     unlock();
     var u = new SpeechSynthesisUtterance(text.replace(/\s*\/\s*/g, ', ').replace(/\(s\)/g, ''));
     u.lang = 'en-US'; u.rate = S.set.rate;
@@ -202,7 +211,7 @@
     $('triage-btns').hidden = mode !== 'triage';
     $('reveal').hidden = mode === 'triage';
     $('hint').textContent = mode === 'triage' ? '只憑直覺，2 秒內決定。點卡片可以看答案。' : '先在心裡想意思，再翻開答案。';
-    if (S.set.auto) speak(cur.w);
+    if (S.set.auto) speakLater(cur.w);
   }
   function reveal() {
     if (!cur || revealed) return;

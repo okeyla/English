@@ -75,7 +75,8 @@ ol.sent li{display:grid;grid-template-columns:5.2em 1fr;gap:12px;align-items:bas
 ol.sent .role{font-size:.78rem;color:var(--muted);text-align:right;letter-spacing:.04em}
 ol.sent .en{font-family:var(--f-display);font-size:1.08rem;line-height:1.55}
 ol.sent .zh{display:block;font-size:.88rem;color:var(--muted);margin-top:2px}
-.hide-zh .zh{display:none}
+.hide-zh .zh, .hide-zh ol.sent .zh{display:none}
+[hidden]{display:none!important}
 .en mark{background:var(--mark);color:inherit;padding:0 2px}
 
 /* table */
@@ -120,6 +121,29 @@ footer a{color:var(--accent)}
   .up-row .arrow{transform:rotate(90deg);justify-self:start}
 }
 @media (prefers-reduced-motion:no-preference){.panel{animation:in .18s ease-out}@keyframes in{from{transform:translateY(4px)}to{transform:none}}}
+/* 6 文章解說：每篇文章一張可收合的卡片，新文章往上加 */
+.arts{display:flex;flex-direction:column;gap:14px}
+.art{border:1px solid var(--rule);border-radius:8px;background:var(--paper)}
+.art > summary{list-style:none;cursor:pointer;padding:14px 16px;display:grid;gap:4px}
+.art > summary::-webkit-details-marker{display:none}
+.art > summary:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.art-meta{display:flex;flex-wrap:wrap;gap:6px;align-items:center;font-size:.8rem;color:var(--muted)}
+.art-meta .kind{color:var(--accent);border:1px solid var(--accent);border-radius:999px;padding:0 8px}
+.art-title{font-size:1.1rem;font-weight:700;display:flex;justify-content:space-between;gap:10px}
+.art-title::after{content:"展開 ▾";font-size:.8rem;font-weight:400;color:var(--accent);white-space:nowrap}
+.art[open] .art-title::after{content:"收合 ▴"}
+.art-body{border-top:1px solid var(--rule);padding:18px 16px 20px;display:flex;flex-direction:column;gap:20px;background:var(--sheet);border-radius:0 0 8px 8px}
+.art-body > section{display:flex;flex-direction:column;gap:10px}
+.lv-tag{font-family:var(--f-mono);font-size:.75rem;color:var(--accent);border:1px solid var(--rule);border-radius:4px;padding:0 6px;white-space:nowrap}
+.src{font-size:.82rem;color:var(--muted)}
+.src a{color:var(--accent)}
+.pats{display:grid;gap:10px}
+.pats > div{border:1px solid var(--rule);border-radius:6px;padding:10px 12px;display:grid;gap:4px}
+.pats .p{font-family:var(--f-display);font-size:1.05rem}
+.pats .p b{background:var(--mark);font-weight:600;padding:0 3px}
+.pats .use{font-family:var(--f-display);color:var(--ink)}
+.pats .use::before{content:"作文用 ";font-family:var(--f-body);font-size:.75rem;color:var(--ok);letter-spacing:.04em}
+.pats .tip{font-size:.85rem;color:var(--muted)}
 .site{display:flex;gap:8px;align-items:center;font-size:.9rem;color:var(--muted)}
 .site a{color:var(--accent);text-decoration:none;font-weight:500}
 .site .go{margin-left:auto}
@@ -149,6 +173,7 @@ footer a{color:var(--accent)}
   <button class="tab" role="tab" id="t-linkers" aria-controls="linkers" data-id="linkers"><span class="n">3</span>轉承語</button>
   <button class="tab" role="tab" id="t-upgrade" aria-controls="upgrade" data-id="upgrade"><span class="n">4</span>句子升級</button>
   <button class="tab" role="tab" id="t-grammar" aria-controls="grammar" data-id="grammar"><span class="n">5</span>文法與 Q&amp;A</button>
+  <button class="tab" role="tab" id="t-reading" aria-controls="reading" data-id="reading"><span class="n">6</span>文章解說</button>
 </nav>
 
 <!-- 0 overview -->
@@ -307,6 +332,101 @@ footer a{color:var(--accent)}
     <details><summary>第二段理由寫 2 個還是 3 個？</summary><p>建議 1 個主要理由＋1 個例子或經驗，寫深寫具體。</p></details>
     <details><summary>轉承語是不是用越多越高級？</summary><p>不是。用得準比用得多重要。</p></details>
     <details><summary>想到中文卻翻不出正確英文怎麼辦？</summary><p>表示要回頭補文法與句構，多讀、多拆解正確的英文句子。</p></details>
+  </div>
+</section>
+
+<!-- 6 reading：英文文章解說（新文章加在 .arts 最上面） -->
+<section class="panel" role="tabpanel" id="reading" aria-labelledby="t-reading" hidden>
+  <h2>英文文章解說</h2>
+  <p class="intro">收集真實世界的英文文章，逐段中英對照，挑出學測 4–6 級單字和可以直接搬進作文的句型。點標題展開。</p>
+
+  <div class="arts">
+
+    <details class="art" open>
+      <summary>
+        <span class="art-meta"><span class="kind">道歉信</span><span>2026-11-08</span><span>NVIDIA 執行長 黃仁勳</span></span>
+        <span class="art-title">A Message to Our Company：黃仁勳致員工信</span>
+      </summary>
+      <div class="art-body">
+
+        <section>
+          <h3>文章結構：一封負責任的道歉信怎麼寫</h3>
+          <div class="steps">
+            <div class="step"><span class="tag">¶1</span><div><h3>直接認錯 <small>不繞圈子</small></h3><p>第一句就說「我欠大家一個道歉」，接著用最短的句子說清楚做了什麼、傷害了誰。</p></div></div>
+            <div class="step"><span class="tag">¶2</span><div><h3>承擔責任 <small>不找藉口</small></h3><p>先說家人給了什麼，再用 Instead 轉折說自己辜負了他們，最後 take full responsibility。</p></div></div>
+            <div class="step"><span class="tag">¶3–4</span><div><h3>分對象說話 <small>家人 → 同仁與股東</small></h3><p>用「To ___:」開頭，對不同讀者分別道歉，並說出之後要怎麼做（earn back）。</p></div></div>
+            <div class="step"><span class="tag">¶5</span><div><h3>回應外界疑慮 <small>事實＋態度</small></h3><p>先陳述事實（董事會已啟動調查），再表態支持、配合。</p></div></div>
+            <div class="step"><span class="tag">¶6</span><div><h3>收尾請求 <small>短句收束</small></h3><p>「I do.」兩個字把責任全攬在自己身上，最後提出一個具體請求。</p></div></div>
+          </div>
+        </section>
+
+        <section class="ex" data-ex>
+          <div class="ex-head"><h3>原文逐段對照</h3><button class="toggle" type="button" id="z6">隱藏中文</button></div>
+          <ol class="sent">
+            <li><span class="role">開頭</span><span class="en">To my colleagues at NVIDIA,<span class="zh">給我在 NVIDIA 的同仁們：</span></span></li>
+            <li><span class="role">¶1 認錯</span><span class="en"><mark>I owe</mark> my family and all of you <mark>an apology</mark>. I was unfaithful to my wife. My actions hurt her and our children. <mark>There is no excuse for</mark> what I did. I am deeply sorry.<span class="zh">我欠我的家人以及你們所有人一個道歉。我對妻子不忠。我的行為傷害了她和我們的孩子，對此我沒有任何藉口，並表達最深切的歉意。</span></span></li>
+            <li><span class="role">¶2 負責</span><span class="en">Throughout my life, my family has given me love and support. They <mark>deserve</mark> my honesty and loyalty. <mark>Instead</mark>, I <mark>let them down</mark> and damaged the life we built together. I <mark>take full responsibility for</mark> what I did and the hurt I caused, and I accept the criticism that comes with it.<span class="zh">一直以來，我的家人都給予我愛與支持，他們值得我的誠實與忠誠。然而，我卻讓他們失望，也破壞了我們共同建立的生活。我對自己的所作所為及造成的傷害承擔全部責任，並接受隨之而來的批評。</span></span></li>
+            <li><span class="role">¶3 對家人</span><span class="en">To my wife and family: I love you. I know an apology <mark>cannot undo</mark> what I have done. I hope our family will heal and that, <mark>over time</mark>, I can <mark>earn back</mark> your trust.<span class="zh">給我的妻子與家人：我愛你們。我知道一句道歉無法抹去我所做過的事，但我希望我們的家庭能夠療癒傷痛，也希望隨著時間推移，我能重新贏回你們的信任。</span></span></li>
+            <li><span class="role">¶4 對同仁</span><span class="en">To my colleagues at NVIDIA, including those I have worked alongside for decades, and to our board, partners, and shareholders around the world: you <mark>deserve better from me</mark>. Leading NVIDIA is <mark>the privilege of my life</mark>. My responsibility is to serve you and <mark>be worthy of</mark> your trust. I have <mark>fallen short of</mark> that responsibility. I am fully committed to NVIDIA and will work to earn back your confidence.<span class="zh">給我在 NVIDIA 的同仁，包括數十年來與我並肩作戰的夥伴以及我們的董事會、合作夥伴與全球股東：你們值得我更好的對待。領導 NVIDIA 是我這輩子最大的榮幸，我的責任是為大家服務，並配得上你們的信任，但我辜負了這項責任。我對 NVIDIA 擁有絕對的承諾，並會盡全力重新贏得你們的信心。</span></span></li>
+            <li><span class="role">¶5 調查</span><span class="en"><mark>Regarding</mark> the national security concerns raised in news reports, NVIDIA's Board of Directors has initiated an independent investigation. I support the investigation and will <mark>cooperate</mark> fully. I love our country and our company. I am <mark>committed to protecting</mark> NVIDIA and supporting America's national security. I am proud and grateful to be an American.<span class="zh">關於新聞報導中所提及的國家安全疑慮，NVIDIA 董事會已啟動獨立調查。我全力支持這項調查並將完全配合。我熱愛我們的國家與公司，並致力於保護 NVIDIA 及維護美國的國家安全。能身為美國人，我感到無比自豪與感激。</span></span></li>
+            <li><span class="role">¶6 收尾</span><span class="en">My family <mark>bears no responsibility for</mark> my choices. <mark>I do.</mark> Please give them privacy.<span class="zh">我的家人無需為我的選擇承擔任何責任，所有責任由我一人承擔。請給予他們隱私與空間。</span></span></li>
+          </ol>
+        </section>
+
+        <section>
+          <h3>學測 4–6 級單字</h3>
+          <div class="tbl"><table>
+            <thead><tr><th>單字</th><th>級別</th><th>意思</th><th>文中用法</th></tr></thead>
+            <tbody>
+              <tr><td class="en-c">apology</td><td><span class="lv-tag">L4</span></td><td>n. 道歉</td><td class="en-c">owe sb an apology</td></tr>
+              <tr><td class="en-c">faithful → unfaithful</td><td><span class="lv-tag">L4</span></td><td>adj. 忠實的 → 不忠的</td><td class="en-c">be unfaithful to sb</td></tr>
+              <tr><td class="en-c">loyalty</td><td><span class="lv-tag">L4</span></td><td>n. 忠誠</td><td class="en-c">honesty and loyalty</td></tr>
+              <tr><td class="en-c">deserve</td><td><span class="lv-tag">L4</span></td><td>v. 應得、值得</td><td class="en-c">deserve better from me</td></tr>
+              <tr><td class="en-c">criticism</td><td><span class="lv-tag">L4</span></td><td>n. 批評</td><td class="en-c">accept the criticism</td></tr>
+              <tr><td class="en-c">privilege</td><td><span class="lv-tag">L4</span></td><td>n. 榮幸、特權</td><td class="en-c">the privilege of my life</td></tr>
+              <tr><td class="en-c">confidence</td><td><span class="lv-tag">L4</span></td><td>n. 信心、信任</td><td class="en-c">earn back your confidence</td></tr>
+              <tr><td class="en-c">regarding</td><td><span class="lv-tag">L4</span></td><td>prep. 關於</td><td class="en-c">Regarding the concerns…</td></tr>
+              <tr><td class="en-c">investigation</td><td><span class="lv-tag">L4</span></td><td>n. 調查</td><td class="en-c">an independent investigation</td></tr>
+              <tr><td class="en-c">cooperate</td><td><span class="lv-tag">L4</span></td><td>v. 合作、配合</td><td class="en-c">cooperate fully</td></tr>
+              <tr><td class="en-c">privacy</td><td><span class="lv-tag">L4</span></td><td>n. 隱私</td><td class="en-c">give them privacy</td></tr>
+              <tr><td class="en-c">commit → committed</td><td><span class="lv-tag">L4</span></td><td>v. 承諾、投入</td><td class="en-c">be committed to + N / V-ing</td></tr>
+              <tr><td class="en-c">colleague</td><td><span class="lv-tag">L5</span></td><td>n. 同事</td><td class="en-c">my colleagues at NVIDIA</td></tr>
+              <tr><td class="en-c">worthy</td><td><span class="lv-tag">L5</span></td><td>adj. 值得的、配得上</td><td class="en-c">be worthy of your trust</td></tr>
+              <tr><td class="en-c">initiate</td><td><span class="lv-tag">L5</span></td><td>v. 開始、發起</td><td class="en-c">initiate an investigation</td></tr>
+              <tr><td class="en-c">undo</td><td><span class="lv-tag">L6</span></td><td>v. 取消、復原</td><td class="en-c">cannot undo what I have done</td></tr>
+              <tr><td class="en-c">alongside</td><td><span class="lv-tag">L6</span></td><td>prep. 在旁邊、一起</td><td class="en-c">worked alongside for decades</td></tr>
+            </tbody>
+          </table></div>
+        </section>
+
+        <section>
+          <h3>可以搬進作文的句型</h3>
+          <div class="pats">
+            <div><span class="p"><b>There is no excuse for</b> + N / V-ing</span><span class="use">There is no excuse for cheating on an exam.</span><span class="tip">表達「這件事不能找理由」，比 It is wrong to… 有力。</span></div>
+            <div><span class="p">I <b>take full responsibility for</b> + N</span><span class="use">As the team leader, I take full responsibility for our poor result.</span><span class="tip">反省、檢討類題目的核心句。</span></div>
+            <div><span class="p">sb <b>deserve(s)</b> + N；<b>Instead</b>, …</span><span class="use">My parents deserve my gratitude. Instead, I often complained about them.</span><span class="tip">先說「應該怎樣」，再用 Instead 轉到「實際上卻…」，形成對比。</span></div>
+            <div><span class="p"><b>let</b> sb <b>down</b></span><span class="use">I did not want to let my teammates down, so I practiced every morning.</span><span class="tip">比 make sb disappointed 自然。</span></div>
+            <div><span class="p">… <b>cannot undo</b> + N</span><span class="use">A single apology cannot undo the harm that online bullying causes.</span><span class="tip">「…無法挽回」，適合寫後果、反思。</span></div>
+            <div><span class="p"><b>over time</b>, <b>earn back</b> sb's trust</span><span class="use">Over time, I earned back my friend's trust by keeping every promise.</span><span class="tip">earn back＝靠努力重新贏回，比 get back 更有誠意。</span></div>
+            <div><span class="p"><b>fall short of</b> + N</span><span class="use">My first draft fell short of my teacher's expectations.</span><span class="tip">「未達到…」，常接 expectations、goal、standard。</span></div>
+            <div><span class="p">be <b>worthy of</b> + N</span><span class="use">I want to become someone worthy of my parents' trust.</span><span class="tip">worthy 後面接 of，不接 to。</span></div>
+          </div>
+        </section>
+
+        <section>
+          <h3>文法亮點</h3>
+          <div class="qa">
+            <details><summary>committed to protecting：to 後面為什麼接 V-ing？</summary><p>這裡的 to 是介系詞，不是不定詞，所以後面接名詞或動名詞。同類還有 look forward to、be used to、devote oneself to，學測很愛考。</p></details>
+            <details><summary>「My family bears no responsibility for my choices. I do.」的 I do 是什麼？</summary><p>省略句：I do = I bear responsibility for my choices。用助動詞 do 代替前面整個動詞片語，避免重複，兩個字就把語氣收得很重。</p></details>
+            <details><summary>「To my wife and family:」為什麼用冒號？</summary><p>冒號在這裡表示「接下來的話是對這些人說的」。書信或演講中想分段對不同對象說話，可以這樣用；一般作文較少用到。</p></details>
+            <details><summary>I hope our family will heal and that, over time, I can…：為什麼有第二個 that？</summary><p>hope 後面接了兩個 that 子句，用 and 連接。第一個 that 被省略，第二個保留，是為了在插入語 over time 之後讓讀者看清楚這是第二個「希望」的內容。</p></details>
+          </div>
+        </section>
+
+        <p class="src">出處：NVIDIA Newsroom〈<a href="https://nvidianews.nvidia.com/news/a-message-to-our-company" target="_blank" rel="noopener">A Message to Our Company</a>〉，2026-11-08。中文翻譯取自使用者提供的對照稿；作文例句為本頁另寫的練習句。</p>
+      </div>
+    </details>
+
   </div>
 </section>
 
